@@ -1,27 +1,8 @@
 import React, { useState } from 'react';
 import { Row, Col, Form, Button, FormText } from 'react-bootstrap';
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { Link } from 'react-router-dom';
-
-const REGISTER_USER = gql`
-  mutation register(
-    $username: String!
-    $email: String!
-    $password: String!
-    $confirmPassword: String!
-  ) {
-    register(
-      username: $username
-      email: $email
-      password: $password
-      confirmPassword: $confirmPassword
-    ) {
-      username
-      email
-      createdAt
-    }
-  }
-`;
+import REGISTER_USER from '../graphql/mutations/registerUser';
 
 const Register = ({ history }) => {
   const [email, setEmail] = useState('');
@@ -31,7 +12,7 @@ const Register = ({ history }) => {
   const [errors, setErrors] = useState({});
 
   const [registerUser, { loading }] = useMutation(REGISTER_USER, {
-    update: (_, __) => history.push('/login'),
+    update: (_, __) => history.push('/dashboard'),
     onError: (err) => setErrors(err.graphQLErrors[0].extensions.errors),
   });
 
@@ -68,10 +49,10 @@ const Register = ({ history }) => {
 
   return (
     <Row className="bg-white py-5 justify-content-center">
-      <Col sm={8} md={6} lg={4}>
+      <Col sm={8} md={6} lg={4} className="formContainer">
         <h1 className="text-center">Register</h1>
-        <Form onSubmit={handleSubmitClick}>
-          <Form.Group>
+        <Form onSubmit={handleSubmitClick} className="formContainer__form">
+          <Form.Group className="formContainer__form__formGroup">
             <Form.Label>Email</Form.Label>
             <Form.Control
               type="text"
@@ -79,11 +60,11 @@ const Register = ({ history }) => {
               className={errors.email && 'is-invalid'}
               onChange={handleEmailChange}
             />
-            <FormText style={{ color: 'red' }}>
+            <FormText className="formContainer__form__formGroup__error">
               {errors.email ? errors.email : ''}
             </FormText>
           </Form.Group>
-          <Form.Group>
+          <Form.Group className="formContainer__form__formGroup">
             <Form.Label>Username</Form.Label>
             <Form.Control
               type="text"
@@ -91,11 +72,11 @@ const Register = ({ history }) => {
               className={errors.username && 'is-invalid'}
               onChange={handleUsernameChange}
             />
-            <FormText style={{ color: 'red' }}>
+            <FormText className="formContainer__form__formGroup__error">
               {errors.username ? errors.username : ''}
             </FormText>
           </Form.Group>
-          <Form.Group>
+          <Form.Group className="formContainer__form__formGroup">
             <Form.Label>Password</Form.Label>
             <Form.Control
               type="password"
@@ -103,11 +84,11 @@ const Register = ({ history }) => {
               value={password}
               onChange={handlePasswordChange}
             />
-            <FormText style={{ color: 'red' }}>
+            <FormText className="formContainer__form__formGroup__error">
               {errors.password ? errors.password : ''}
             </FormText>
           </Form.Group>
-          <Form.Group>
+          <Form.Group className="formContainer__form__formGroup">
             <Form.Label>Confirm Password</Form.Label>
             <Form.Control
               type="password"
@@ -115,7 +96,7 @@ const Register = ({ history }) => {
               value={confirmPassword}
               onChange={handleConfirmPasswordChange}
             />
-            <FormText style={{ color: 'red' }}>
+            <FormText className="formContainer__form__formGroup__error">
               {errors.confirmPassword ? errors.confirmPassword : ''}
             </FormText>
           </Form.Group>
@@ -123,7 +104,7 @@ const Register = ({ history }) => {
             <Button variant="success" type="submit" disabled={loading}>
               Register
             </Button>
-            <p style={{ margin: '10px' }}>
+            <p className="py-2">
               Have an account? <Link to="/login">Login</Link>
             </p>
           </div>
