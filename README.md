@@ -2,10 +2,14 @@
 
 Pogo Raid is a chat application that allows people in the Pokemon Go community to communicate easily. It was built using React, Apollo GraphQL, and PostGreSQL.
 
-[Click here to go to the deployed application]()
+<img src="./screenshots/1.gif" width="800" height="500" alt="pogo raid" />
+
+[Click here to go to the deployed application](https://salty-ocean-86043.herokuapp.com/)
 
 * Username: sven
 * Password: Password1234!
+
+[Click here to go to the server](https://sleepy-island-47644.herokuapp.com/)
 
 ## Features
 - Has user authentication.
