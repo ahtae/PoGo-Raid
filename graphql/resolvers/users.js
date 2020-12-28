@@ -2,7 +2,7 @@ const { UserInputError, AuthenticationError } = require('apollo-server');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { Op } = require('sequelize');
-const { User } = require('../../models');
+const { User, Message, Reaction } = require('../../models');
 const { JWT_SECRET } = require('../../config/env.json');
 const signUpValidator = require('../../validation/signUpValidator');
 const loginValidator = require('../../validation/loginValidator');
@@ -15,7 +15,8 @@ module.exports = {
           throw new AuthenticationError('Unauthenticated!');
         }
 
-        const users = await User.findAll({
+        let users = await User.findAll({
+          attributes: ['username', 'imageUrl', 'createdAt'],
           where: {
             username: {
               [Op.ne]: user.username,
@@ -23,11 +24,38 @@ module.exports = {
           },
         });
 
+        const allUserMessages = await Message.findAll({
+          where: {
+            [Op.or]: [
+              {
+                from: user.username,
+              },
+              { to: user.username },
+            ],
+          },
+          order: [['createdAt', 'DESC']],
+          include: [{ model: Reaction, as: 'reactions' }],
+        });
+
+        users = users.map((otherUser) => {
+          const latestMessage = allUserMessages.find(
+            (message) =>
+              message.from === otherUser.username ||
+              message.to === otherUser.username
+          );
+
+          otherUser.latestMessage = latestMessage;
+
+          return otherUser;
+        });
+
         return users;
       } catch (err) {
         throw err;
       }
     },
+  },
+  Mutation: {
     login: async (_, args) => {
       const { username, password } = args;
       const errors = loginValidator(args);
@@ -75,15 +103,12 @@ module.exports = {
 
         return {
           ...user.toJSON(),
-          createdAt: user.createdAt.toISOString(),
           token,
         };
       } catch (err) {
         throw err;
       }
     },
-  },
-  Mutation: {
     register: async (_, args) => {
       const { username, email, password } = args;
       const errors = signUpValidator(args);
@@ -130,7 +155,6 @@ module.exports = {
 
         return {
           ...user.toJSON(),
-          createdAt: user.createdAt.toISOString(),
           token,
         };
       } catch (err) {
