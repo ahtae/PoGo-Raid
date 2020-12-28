@@ -8,9 +8,11 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: contextMiddleware,
+  introspection: true,
+  playground: true,
 });
 
-server.listen().then(({ url }) => {
+server.listen({ port: process.env.PORT || 8000 }).then(({ url }) => {
   console.log(`🚀  Server ready at ${url}`);
 
   sequelize
