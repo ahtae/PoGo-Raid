@@ -6,6 +6,8 @@ module.exports = gql`
     email: String!
     createdAt: String!
     token: String
+    imageUrl: String
+    latestMessage: Message
   }
 
   type Message {
@@ -14,15 +16,24 @@ module.exports = gql`
     to: String!
     from: String!
     createdAt: String!
+    reactions: [Reaction]
+  }
+
+  type Reaction {
+    uuid: String!
+    content: String!
+    createdAt: String!
+    message: Message!
+    user: User!
   }
 
   type Query {
     getUsers: [User]!
-    login(username: String!, password: String!): User!
     getMessages(from: String!): [Message]!
   }
 
   type Mutation {
+    login(username: String!, password: String!): User!
     register(
       username: String!
       email: String!
@@ -30,5 +41,12 @@ module.exports = gql`
       confirmPassword: String!
     ): User!
     sendMessage(to: String!, content: String!): Message!
+    reactToMessage(uuid: String!, content: String!): Reaction!
+    unreactToMessage(uuid: String!): Reaction!
+  }
+
+  type Subscription {
+    newMessage: Message!
+    newReaction: Reaction!
   }
 `;
