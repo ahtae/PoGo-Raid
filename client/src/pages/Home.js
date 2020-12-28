@@ -12,8 +12,8 @@ const Home = ({ history }) => {
   };
 
   return (
-    <Row className="bg-white py-5 justify-content-center">
-      <div className="homeContainer">
+    <Row className="bg-white py-5 justify-content-center homeContainer">
+      <div className="homeContainer__home">
         <h1 className="text-center">PoGo Raid</h1>
         <Image src={PokemonGoBanner} className="homeContainer__image" />
         <div className="text-center m-3">
