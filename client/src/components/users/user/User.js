@@ -14,7 +14,7 @@ const User = ({ selected, user }) => {
     <div
       role="button"
       className={classNames(
-        'user-div d-flex justify-content-center justify-content-md-start p-3',
+        'user-div d-flex justify-content-center justify-content-md-start p-3 userContainer',
         {
           'bg-white': selected,
         }
@@ -26,7 +26,7 @@ const User = ({ selected, user }) => {
           user.imageUrl ||
           'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTY7-RC9JUZLIvBem9xBKX1feFnmigMBUva-A&usqp=CAU'
         }
-        className="user-image"
+        className="userContainer__image"
       />
       <div className="d-none d-md-block ml-2">
         <p className="text-success m-0">{user.username}</p>
