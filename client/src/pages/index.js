@@ -1,4 +1,4 @@
-import Dashboard from './Dashboard/Dashboard';
+import Dashboard from './Dashboard';
 import Home from './Home';
 import Login from './Login';
 import Register from './Register';
