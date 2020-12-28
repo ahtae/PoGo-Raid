@@ -48,53 +48,60 @@ const messageReducer = (state, action) => {
       );
 
       if (userIndex === -1) {
-      userIndex = state.users.findIndex(
-        (user) => user.username === reaction.message.from
-      );
+        userIndex = state.users.findIndex(
+          (user) => user.username === reaction.message.from
+        );
       }
 
       messageIndex = state.users[userIndex].messages.findIndex(
         (message) => message.uuid === reaction.message.uuid
       );
 
-      reactionIndex =  state.users[userIndex].messages[messageIndex].reactions.findIndex(
-        (r) => r.uuid === reaction.uuid
-      );
+      reactionIndex = state.users[userIndex].messages[
+        messageIndex
+      ].reactions.findIndex((r) => r.uuid === reaction.uuid);
 
       return produce(state, (draft) => {
         if (messageIndex > -1 && reactionIndex > -1) {
-          draft.users[userIndex].messages[messageIndex].reactions[reactionIndex] = reaction;
+          draft.users[userIndex].messages[messageIndex].reactions[
+            reactionIndex
+          ] = reaction;
         } else if (messageIndex > -1) {
-          draft.users[userIndex].messages[messageIndex].reactions.push(reaction);
+          draft.users[userIndex].messages[messageIndex].reactions.push(
+            reaction
+          );
         }
       });
-      case 'REMOVE_REACTION':
-        reaction = action.payload.reaction;
-        usernameOfUser = reaction.message.to;
+    case 'REMOVE_REACTION':
+      reaction = action.payload.reaction;
+      usernameOfUser = reaction.message.to;
 
-        userIndex = state.users.findIndex(
-          (user) => user.username === usernameOfUser
-        );
+      userIndex = state.users.findIndex(
+        (user) => user.username === usernameOfUser
+      );
 
-        if (userIndex === -1) {
+      if (userIndex === -1) {
         userIndex = state.users.findIndex(
           (user) => user.username === reaction.message.from
         );
+      }
+
+      messageIndex = state.users[userIndex].messages.findIndex(
+        (message) => message.uuid === reaction.message.uuid
+      );
+
+      reactionIndex = state.users[userIndex].messages[
+        messageIndex
+      ].reactions.findIndex((r) => r.uuid === reaction.uuid);
+
+      return produce(state, (draft) => {
+        if (messageIndex > -1 && reactionIndex > -1) {
+          draft.users[userIndex].messages[messageIndex].reactions.splice(
+            reactionIndex,
+            1
+          );
         }
-
-        messageIndex = state.users[userIndex].messages.findIndex(
-          (message) => message.uuid === reaction.message.uuid
-        );
-
-        reactionIndex =  state.users[userIndex].messages[messageIndex].reactions.findIndex(
-          (r) => r.uuid === reaction.uuid
-        );
-
-        return produce(state, (draft) => {
-          if (messageIndex > -1 && reactionIndex > -1) {
-            draft.users[userIndex].messages[messageIndex].reactions.splice(reactionIndex, 1)
-          }
-        });
+      });
     default:
       return state;
   }
