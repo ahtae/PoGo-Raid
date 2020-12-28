@@ -31,7 +31,7 @@ module.exports = {
         email: 'gretel@email.com',
         password: password,
         imageUrl:
-          'https://lh3.googleusercontent.com/proxy/v5teosDIXft9tVxH_Q6IOlHRRAOPCQ_5eTYzYEtzQAH4w5wOTL8TJtKHnxVh742XBLFIM3GW4M9u4pVkgTaSiC86t3Z3AULBYFM0meZS5YYP6qM0VsT5oJiv4yFFHKDsw_ELvg',
+          'https://d.newsweek.com/en/full/822411/pikachu-640x360-pokemon-anime.jpg?w=1600&h=1200&q=88&f=3ed1c0d6e3890cbc58be90f05908a8f5',
         createdAt,
         updatedAt,
       },
@@ -45,5 +45,6 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
+    await queryInterface.bulkDelete('users', null, {});
   },
 };
