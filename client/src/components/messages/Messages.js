@@ -56,7 +56,7 @@ const Messages = () => {
     ));
   } else if (messages && messages.length === 0) {
     selectedChatMarkup = (
-      <p className="messagesContainer__messages_message">
+      <p className="messagesContainer__messages__message">
         You are now connected! Send your first message!
       </p>
     );
