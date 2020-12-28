@@ -34,12 +34,7 @@ const Users = () => {
   }
 
   return (
-    <Col
-      xs={2}
-      md={4}
-      className="p-0 bg-secondary"
-      style={{ border: '1px solid gray' }}
-    >
+    <Col xs={2} md={4} className="p-0 bg-secondary usersContainer">
       {allUsers}
     </Col>
   );
