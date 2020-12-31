@@ -1,6 +1,6 @@
 # Pogo Raid
 
-Pogo Raid is a chat application that allows people in the Pokemon Go community to communicate easily. It was built using React, Apollo GraphQL, and PostGreSQL.
+Pogo Raid is a chat application that allows people in the Pokemon Go community to communicate conveniently. It was built using React, Apollo, GraphQL, and PostgreSQL.
 
 <img src="./screenshots/1.gif" width="800" height="500" alt="pogo raid" />
 
